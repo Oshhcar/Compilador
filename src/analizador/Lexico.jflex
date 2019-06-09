@@ -78,18 +78,11 @@ COMENT_MULTI ="/*""/"*([^*/]|[^*]"/"|"*"[^/])*"*"*"*/"
 {COMENT_MULTI} 		{/* se ignora */} 
 
 /* Palabras Reservadas*/
-<YYINITIAL> "public"			{ return symbol(Sym.public_);}
-<YYINITIAL> "protected"			{ return symbol(Sym.protected_);}
-<YYINITIAL> "private"			{ return symbol(Sym.private_);}
-<YYINITIAL> "abstract"			{ return symbol(Sym.abstract_);}
-<YYINITIAL> "static"			{ return symbol(Sym.static_);}
-<YYINITIAL> "final"			{ return symbol(Sym.final_);}
-<YYINITIAL> "extends"			{ return symbol(Sym.extends_);}
-<YYINITIAL> "class"			{ return symbol(Sym.class_);}
 <YYINITIAL> "int"			{ return symbol(Sym.int_);}
 <YYINITIAL> "double"			{ return symbol(Sym.double_);}
 <YYINITIAL> "char"			{ return symbol(Sym.char_);}
 <YYINITIAL> "boolean"			{ return symbol(Sym.boolean_);}
+<YYINITIAL> "String"			{ return symbol(Sym.string_);}
 
 <YYINITIAL> "null"			{ return symbol(Sym.null_);}
 <YYINITIAL> "true"			{ return symbol(Sym.true_);}

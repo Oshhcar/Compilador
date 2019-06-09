@@ -11,28 +11,23 @@ public class Sym {
   public static final int igualigual = 34;
   public static final int porigual = 43;
   public static final int menosigual = 42;
-  public static final int protected_ = 46;
   public static final int false_ = 9;
-  public static final int char_ = 55;
+  public static final int char_ = 47;
   public static final int null_ = 7;
   public static final int coma = 17;
   public static final int igual = 40;
-  public static final int double_ = 54;
+  public static final int double_ = 46;
   public static final int mayorque = 30;
   public static final int masigual = 41;
   public static final int menosmenos = 29;
-  public static final int private_ = 47;
   public static final int puntoycoma = 16;
   public static final int llaveIzquierda = 10;
   public static final int masmas = 28;
   public static final int menos = 22;
-  public static final int abstract_ = 48;
   public static final int porcentaje = 25;
-  public static final int extends_ = 51;
   public static final int EOF = 0;
   public static final int diagonaligual = 44;
-  public static final int int_ = 53;
-  public static final int class_ = 52;
+  public static final int int_ = 45;
   public static final int mas = 21;
   public static final int error = 1;
   public static final int true_ = 8;
@@ -41,7 +36,6 @@ public class Sym {
   public static final int or = 37;
   public static final int entero = 4;
   public static final int parIzquierda = 12;
-  public static final int final_ = 50;
   public static final int menorigual = 33;
   public static final int punto = 18;
   public static final int corcheteDerecha = 15;
@@ -50,9 +44,8 @@ public class Sym {
   public static final int parDerecha = 13;
   public static final int xor = 39;
   public static final int id = 6;
-  public static final int public_ = 45;
+  public static final int string_ = 49;
   public static final int mayorigual = 32;
-  public static final int static_ = 49;
   public static final int corcheteIzquierda = 14;
   public static final int diferente = 35;
   public static final int llaveDerecha = 11;
@@ -63,7 +56,7 @@ public class Sym {
   public static final int interrogacion = 20;
   public static final int decimal = 5;
   public static final int diagonal = 24;
-  public static final int boolean_ = 56;
+  public static final int boolean_ = 48;
   public static final int tchar = 3;
   public static final String[] terminalNames = new String[] {
   "EOF",
@@ -111,18 +104,11 @@ public class Sym {
   "menosigual",
   "porigual",
   "diagonaligual",
-  "public_",
-  "protected_",
-  "private_",
-  "abstract_",
-  "static_",
-  "final_",
-  "extends_",
-  "class_",
   "int_",
   "double_",
   "char_",
-  "boolean_"
+  "boolean_",
+  "string_"
   };
 }
 

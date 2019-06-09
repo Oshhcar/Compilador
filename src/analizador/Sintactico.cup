@@ -49,8 +49,7 @@ terminal mas, menos, asterisco, diagonal, porcentaje, umenos, umas, masmas, meno
 terminal mayorque, menorque, mayorigual, menorigual, igualigual, diferente;
 terminal and, or, not, xor;
 terminal igual, masigual, menosigual, porigual, diagonaligual;
-terminal public_, protected_, private_, abstract_, static_, final_, extends_, class_;
-terminal int_, double_, char_, boolean_;
+terminal int_, double_, char_, boolean_, string_;
 
 non terminal INICIO;
 non terminal Expresion E;
