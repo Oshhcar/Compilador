@@ -1,0 +1,89 @@
+package analizador;
+
+import java_cup.runtime.Symbol;
+import java.util.ArrayList;
+import java.util.Map;
+import java.util.HashMap;
+
+import analizador.ast.*;
+import analizador.ast.entorno.*;
+import analizador.ast.expresion.*;
+import analizador.ast.instruccion.*;
+
+parser code
+{:
+	private Ast ast;
+	
+	public Ast getAST(){
+		return ast;
+	}
+	
+    @Override
+    public void syntax_error(Symbol s){
+        System.out.println("Error Sintactico en la Linea " + (s.right+1) +" Columna "+(s.left+1)+ ". Identificador " +s.value + " no reconocido." );
+		//AnalizadorError tmp = new AnalizadorError();
+		//tmp.setColumna(s.right+1);
+		//tmp.setLinea(s.left+1);
+		//tmp.setValor(s.value+"");
+		//tmp.setError("Sintáctico");
+        
+		//error.add(tmp);
+    }
+
+    @Override
+    public void unrecovered_syntax_error(Symbol s){
+        System.out.println("Error Sintactico Fatal en la Linea " + (s.right+1)+ " Columna "+(s.left+1)+". Identificador " + s.value + " no reconocido.");
+		//report_fatal_error("Error sintactico: <"+s.value+">", cur_token);
+	}
+:}
+
+action code
+{:
+
+:}
+
+terminal String tstring, tchar, entero, decimal, id, null_, true_, false_;
+terminal llaveIzquierda, llaveDerecha, parIzquierda, parDerecha, corcheteIzquierda, corcheteDerecha, puntoycoma, coma, punto;
+terminal dospuntos, interrogacion;
+terminal mas, menos, asterisco, diagonal, porcentaje, umenos, umas, masmas, menosmenos;
+terminal mayorque, menorque, mayorigual, menorigual, igualigual, diferente;
+terminal and, or, not, xor;
+terminal igual, masigual, menosigual, porigual, diagonaligual;
+terminal public_, protected_, private_, abstract_, static_, final_, extends_, class_;
+terminal int_, double_, char_, boolean_;
+
+non terminal INICIO;
+non terminal Expresion E;
+
+precedence left interrogacion;
+precedence left or;
+precedence left and;
+precedence right not;
+precedence left igualigual;
+precedence left diferente;
+precedence left mayorque, menorque, mayorigual, menorigual;
+precedence left mas, menos;
+precedence left asterisco, diagonal;
+precedence right porcentaje;
+precedence right masmas, menosmenos;
+precedence right umenos, umas;
+
+start with INICIO;
+
+INICIO ::= E:c
+        {: 
+            parser.ast = new Ast();
+            System.out.println("COMPILADOR OK"); 
+        :};
+
+E ::= entero:a {: RESULT = new Literal(Tipo.INT, new Integer(a), aleft, aright); :}
+    | decimal:a {: RESULT = new Literal(Tipo.DOUBLE, new Double(a), aleft, aright); :}
+    | tstring:a {: System.out.println(a); :}
+    | tchar:a {: RESULT = new Literal(Tipo.CHAR, a.charAt(0), aleft, aright); :}
+    | true_:a {: RESULT = new Literal(Tipo.BOOLEAN, new Boolean(true), aleft, aright); :}
+    | false_:a {: RESULT = new Literal(Tipo.BOOLEAN, new Boolean(false), aleft, aright); :}
+    | id:a {: RESULT = new Identificador(a, aleft, aright); :};
+
+		
+		
+		
