@@ -45,13 +45,22 @@ action code
 terminal String tstring, tchar, entero, decimal, id, null_, true_, false_;
 terminal llaveIzquierda, llaveDerecha, parIzquierda, parDerecha, corcheteIzquierda, corcheteDerecha, puntoycoma, coma, punto;
 terminal dospuntos, interrogacion;
-terminal mas, menos, asterisco, diagonal, porcentaje, umenos, umas, masmas, menosmenos;
+terminal mas, menos, asterisco, diagonal, potencia, umenos, umas, masmas, menosmenos;
 terminal mayorque, menorque, mayorigual, menorigual, igualigual, diferente;
 terminal and, or, not, xor;
 terminal igual, masigual, menosigual, porigual, diagonaligual;
 terminal int_, double_, char_, boolean_, string_;
+terminal print_;
 
 non terminal INICIO;
+non terminal ArrayList<NodoAst> SENTENCIAS;
+non terminal NodoAst SENTENCIA; 
+non terminal Tipo TIPO;
+non terminal Declaracion DECLARACION;
+non terminal ArrayList<Asignacion> DECLARACION_LISTA;
+non terminal Asignacion DECLA_ASIGNA;
+non terminal Identificador DECLARACION_ID;
+non terminal Asignacion ASIGNACION;
 non terminal Expresion E;
 
 precedence left interrogacion;
@@ -63,21 +72,47 @@ precedence left diferente;
 precedence left mayorque, menorque, mayorigual, menorigual;
 precedence left mas, menos;
 precedence left asterisco, diagonal;
-precedence right porcentaje;
+precedence right potencia;
 precedence right masmas, menosmenos;
 precedence right umenos, umas;
 
 start with INICIO;
 
-INICIO ::= E:c
+INICIO ::= SENTENCIAS:s
         {: 
-            parser.ast = new Ast();
+            parser.ast = new Ast(s);
             System.out.println("COMPILADOR OK"); 
         :};
 
+SENTENCIAS ::= SENTENCIAS:a SENTENCIA:b {: RESULT = a; RESULT.add(b); :}
+            | SENTENCIA:a {: RESULT = new ArrayList<>(); RESULT.add(a); :};
+
+SENTENCIA ::= print_ parIzquierda E:e parDerecha puntoycoma {: RESULT = new Print(e, eleft, eright); :}
+            | DECLARACION:a puntoycoma {: RESULT = a; :}
+            | ASIGNACION:a puntoycoma {: RESULT = a; :};
+            
+DECLARACION ::= TIPO:a DECLARACION_LISTA:b {: RESULT = new Declaracion(a, b, aleft, bright); :};
+
+DECLARACION_LISTA ::= DECLARACION_LISTA:a coma DECLA_ASIGNA:b {: RESULT = a; RESULT.add(b);  :}
+                    | DECLA_ASIGNA:a {: RESULT = new ArrayList<>(); RESULT.add(a); :};
+
+DECLA_ASIGNA ::= DECLARACION_ID:a igual E:b {: RESULT = new Asignacion(a, b, aleft, aright); :}
+                |DECLARACION_ID:a {: RESULT = new Asignacion(a, aleft, aright); :};
+
+DECLARACION_ID ::= DECLARACION_ID:a corcheteIzquierda corcheteDerecha {:RESULT = a; RESULT.addDimension(); :}
+                | id:a {: RESULT = new Identificador(a, aleft, aright); :};
+
+ASIGNACION ::= id:a igual E:b {: RESULT = new Asignacion(new Identificador(a, aleft, aright), aleft, aright); :};
+
+TIPO ::= int_ {: RESULT = Tipo.INT; :}
+        |double_ {: RESULT = Tipo.DOUBLE; :}
+        |string_ {: RESULT = Tipo.STRING; :}
+        |char_ {: RESULT = Tipo.CHAR; :}
+        |boolean_ {: RESULT = Tipo.BOOLEAN; :};
+
 E ::= entero:a {: RESULT = new Literal(Tipo.INT, new Integer(a), aleft, aright); :}
     | decimal:a {: RESULT = new Literal(Tipo.DOUBLE, new Double(a), aleft, aright); :}
-    | tstring:a {: System.out.println(a); :}
+    | tstring:a {: RESULT = new Literal(Tipo.STRING, a, aleft, aright); :}
     | tchar:a {: RESULT = new Literal(Tipo.CHAR, a.charAt(0), aleft, aright); :}
     | true_:a {: RESULT = new Literal(Tipo.BOOLEAN, new Boolean(true), aleft, aright); :}
     | false_:a {: RESULT = new Literal(Tipo.BOOLEAN, new Boolean(false), aleft, aright); :}

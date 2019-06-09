@@ -2,6 +2,7 @@ package analizador;
 
 import java_cup.runtime.Symbol;
 import java.util.ArrayList;
+import javax.swing.JTextArea;
 
 %%
 
@@ -29,6 +30,11 @@ import java.util.ArrayList;
         public ArrayList<ErrorC> getErrores(){
             return this.errores;
         }
+        
+        private JTextArea salida;
+        public void setSalida(JTextArea salida){
+            this.salida = salida;
+        }
 
         public void addError(){
             if(this.isError){
@@ -39,6 +45,10 @@ import java.util.ArrayList;
                 error.setValor(this.valorError);
                 error.setDescripcion("Carácter no reconocido.");
                 this.errores.add(error);
+                
+                this.salida.append("*Error léxico, carácter \"" + this.valorError + "\" no reconocido.");
+                this.salida.append("Línea: " + (yyline+1) + " Columna: " + this.columnaError +". \n");
+
                 this.isError = false;
                 this.columnaError = 0;
                 this.valorError = "";
@@ -84,6 +94,8 @@ COMENT_MULTI ="/*""/"*([^*/]|[^*]"/"|"*"[^/])*"*"*"*/"
 <YYINITIAL> "boolean"			{ return symbol(Sym.boolean_);}
 <YYINITIAL> "String"			{ return symbol(Sym.string_);}
 
+<YYINITIAL> "print"			{ return symbol(Sym.print_);}
+
 <YYINITIAL> "null"			{ return symbol(Sym.null_);}
 <YYINITIAL> "true"			{ return symbol(Sym.true_);}
 <YYINITIAL> "false"			{ return symbol(Sym.false_);}
@@ -112,7 +124,7 @@ COMENT_MULTI ="/*""/"*([^*/]|[^*]"/"|"*"[^/])*"*"*"*/"
 "-"                 {return symbol(Sym.menos);}
 "*"                 {return symbol(Sym.asterisco);}  
 "/"                 {return symbol(Sym.diagonal);}
-"%"                 {return symbol(Sym.porcentaje);}
+"^"                 {return symbol(Sym.potencia);}
 
 "++"                {return symbol(Sym.masmas);}
 "--"                {return symbol(Sym.menosmenos);}

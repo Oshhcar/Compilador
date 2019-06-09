@@ -11,6 +11,7 @@ public class Sym {
   public static final int igualigual = 34;
   public static final int porigual = 43;
   public static final int menosigual = 42;
+  public static final int print_ = 50;
   public static final int false_ = 9;
   public static final int char_ = 47;
   public static final int null_ = 7;
@@ -24,7 +25,6 @@ public class Sym {
   public static final int llaveIzquierda = 10;
   public static final int masmas = 28;
   public static final int menos = 22;
-  public static final int porcentaje = 25;
   public static final int EOF = 0;
   public static final int diagonaligual = 44;
   public static final int int_ = 45;
@@ -43,6 +43,7 @@ public class Sym {
   public static final int menorque = 31;
   public static final int parDerecha = 13;
   public static final int xor = 39;
+  public static final int potencia = 25;
   public static final int id = 6;
   public static final int string_ = 49;
   public static final int mayorigual = 32;
@@ -84,7 +85,7 @@ public class Sym {
   "menos",
   "asterisco",
   "diagonal",
-  "porcentaje",
+  "potencia",
   "umenos",
   "umas",
   "masmas",
@@ -108,7 +109,8 @@ public class Sym {
   "double_",
   "char_",
   "boolean_",
-  "string_"
+  "string_",
+  "print_"
   };
 }
 

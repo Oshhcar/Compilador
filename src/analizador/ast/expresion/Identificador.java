@@ -8,6 +8,7 @@ package analizador.ast.expresion;
 import analizador.ast.entorno.Entorno;
 import analizador.ast.entorno.Simbolo;
 import analizador.ast.entorno.Tipo;
+import javax.swing.JTextArea;
 
 /**
  *
@@ -15,10 +16,12 @@ import analizador.ast.entorno.Tipo;
  */
 public class Identificador extends Expresion{
     private final String id;
+    private int dimensiones;
     
     public Identificador(String id, int linea, int columna) {
         super(linea, columna);
         this.id = id;
+        this.dimensiones = 0;
     }
 
     @Override
@@ -35,6 +38,9 @@ public class Identificador extends Expresion{
         Simbolo tmp = e.get(id);
         if(tmp != null){
             return tmp.getValor();
+        } else {
+            ((JTextArea) salida).append("*Error Semántico, no se ha declarado la variable: \"" + id +"\". ");
+            ((JTextArea) salida).append("Línea: " + this.getLinea() + " Columna: " + this.getColumna() + ". \n");
         }
         return null;
     }
@@ -46,4 +52,14 @@ public class Identificador extends Expresion{
         return id;
     }
     
+    public void addDimension(){
+        this.dimensiones++;
+    }
+
+    /**
+     * @return the dimensiones
+     */
+    public int getDimensiones() {
+        return dimensiones;
+    }
 }

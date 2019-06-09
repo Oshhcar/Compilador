@@ -1020,6 +1020,7 @@ public class Editor extends javax.swing.JFrame {
             this.errores.clear();
 
             lexico = new Lexico(new BufferedReader(new StringReader(entrada)));
+            lexico.setSalida(this.jTextArea1);
             sintactico = new Sintactico(lexico);
 
             Ast ast = null;
@@ -1034,9 +1035,8 @@ public class Editor extends javax.swing.JFrame {
                 }
 
                 if (ast != null) {
-                    
-                    //ast.ejecutar(this.jTextArea1, this.errores);
-                    //System.out.println("Genera ast");
+                    System.out.println("Genera ast");
+                    ast.ejecutar(this.jTextArea1);
                 }
             } catch (Exception ex) {
                 System.out.println("Exception " + ex);
@@ -1051,7 +1051,7 @@ public class Editor extends javax.swing.JFrame {
                         "El archivo contiene errores.",
                         "Mensaje de Error",
                         JOptionPane.ERROR_MESSAGE);
-                this.reporteErrores();
+                //this.reporteErrores();
             }
         } else {
             JOptionPane.showMessageDialog(null,
