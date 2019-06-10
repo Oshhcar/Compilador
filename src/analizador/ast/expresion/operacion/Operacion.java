@@ -38,6 +38,10 @@ public class Operacion extends Expresion{
         MENORIGUAL,
         IGUAL,
         DIFERENTE,
+        AND,
+        OR,
+        NOT,
+        XOR
     }
     
     @Override

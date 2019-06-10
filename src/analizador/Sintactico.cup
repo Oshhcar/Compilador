@@ -67,6 +67,7 @@ non terminal Expresion E;
 precedence left interrogacion;
 precedence left or;
 precedence left and;
+precedence left xor;
 precedence right not;
 precedence left igualigual;
 precedence left diferente;
@@ -123,6 +124,11 @@ E ::= E:a mas:x E:b {: RESULT = new Aritmetica(a, b, Operacion.Operador.SUMA, xl
     | E:a menorigual:x E:b {: RESULT = new Relacional(a, b, Operacion.Operador.MENORIGUAL, xleft, xright); :}
     | E:a igualigual:x E:b {: RESULT = new Relacional(a, b, Operacion.Operador.IGUAL, xleft, xright); :}
     | E:a diferente:x E:b {: RESULT = new Relacional(a, b, Operacion.Operador.DIFERENTE, xleft, xright); :}
+
+    | E:a and:x E:b {: RESULT = new Logica(a, b, Operacion.Operador.AND, xleft, xright); :}
+    | E:a or:x E:b {: RESULT = new Logica(a, b, Operacion.Operador.OR, xleft, xright); :}
+    | not:x E:b {: RESULT = new Logica(b, Operacion.Operador.NOT, xleft, xright); :}
+    | E:a xor:x E:b {: RESULT = new Logica(a, b, Operacion.Operador.XOR, xleft, xright); :}
 
     | entero:a {: RESULT = new Literal(Tipo.INT, new Integer(a), aleft, aright); :}
     | decimal:a {: RESULT = new Literal(Tipo.DOUBLE, new Double(a), aleft, aright); :}
