@@ -31,34 +31,38 @@ public class DoWhile extends Instruccion {
     @Override
     public Object ejecutar(Entorno e, Object salida) {
         if (this.bloques != null) {
-            Entorno local = new Entorno(e);
+            
             while (true) {
+                Entorno local = new Entorno(e);
                 for (NodoAst bloque : this.bloques) {
                     if (bloque instanceof Instruccion) {
                         if (bloque instanceof Break) {
                             return null;
                         } else {
-                            Object obj = ((Instruccion)bloque).ejecutar(local, salida);
-                            if(obj instanceof Break){
-                                return null;
-                            } /*return*/
+                            Object obj = ((Instruccion) bloque).ejecutar(local, salida);
+                            if (obj != null) {
+                                if (obj instanceof Break) {
+                                    return null;
+                                }
+                                /*return*/
+                            }
                         }
                     } else {
-                        Object obj = ((Expresion)bloque).getValor(local, salida);
+                        Object obj = ((Expresion) bloque).getValor(local, salida);
                         /*RETURN*/
                     }
                 }
                 Tipo tipCond = this.condicion.getTipo(e, salida);
-                if(tipCond != null){
-                    if(tipCond == Tipo.BOOLEAN){
+                if (tipCond != null) {
+                    if (tipCond == Tipo.BOOLEAN) {
                         Object valor = this.condicion.getValor(e, salida);
-                        if(valor != null){
-                           if(Boolean.valueOf(valor.toString())){
-                               continue;
-                           } 
-                        } 
-                    } 
-                } 
+                        if (valor != null) {
+                            if (Boolean.valueOf(valor.toString())) {
+                                continue;
+                            }
+                        }
+                    }
+                }
                 return null;
             }
         }

@@ -32,7 +32,7 @@ public class Declaracion extends Instruccion {
 
         for (Asignacion asigna : this.asignaciones) {
             String id = asigna.getId().getId();
-            Simbolo tmp = e.get(id);
+            Simbolo tmp = e.getLocal(id);
             if (tmp == null) {
                 Expresion valor = asigna.getValor();
                 if (valor != null) {
