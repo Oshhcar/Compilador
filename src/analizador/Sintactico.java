@@ -200,11 +200,11 @@ public class Sintactico extends java_cup.runtime.lr_parser {
     "\067\036\055\037\054\042\uffd1\043\uffd1\044\uffd1\045\uffd1" +
     "\046\uffd1\047\uffd1\050\uffd1\051\uffd1\053\uffd1\001\002\000" +
     "\054\017\uffcd\022\uffcd\023\uffcd\025\uffcd\026\uffcd\027\uffcd" +
-    "\030\uffcd\031\uffcd\032\uffcd\033\067\036\055\037\054\042" +
+    "\030\uffcd\031\uffcd\032\uffcd\033\uffcd\036\055\037\054\042" +
     "\uffcd\043\uffcd\044\uffcd\045\uffcd\046\uffcd\047\uffcd\050\uffcd" +
     "\051\uffcd\053\uffcd\001\002\000\054\017\uffcf\022\uffcf\023" +
     "\uffcf\025\uffcf\026\uffcf\027\uffcf\030\uffcf\031\uffcf\032\uffcf" +
-    "\033\067\036\055\037\054\042\uffcf\043\uffcf\044\uffcf\045" +
+    "\033\uffcf\036\055\037\054\042\uffcf\043\uffcf\044\uffcf\045" +
     "\uffcf\046\uffcf\047\uffcf\050\uffcf\051\uffcf\053\uffcf\001\002" +
     "\000\036\010\021\015\uffdd\036\010\037\006\061\027\062" +
     "\020\063\004\064\023\065\024\066\107\067\121\070\025" +
@@ -295,7 +295,7 @@ public class Sintactico extends java_cup.runtime.lr_parser {
     "\037\054\042\uffc6\043\uffc6\044\uffc6\045\uffc6\046\uffc6\047" +
     "\uffc6\050\uffc6\051\uffc6\053\uffc6\001\002\000\054\017\uffce" +
     "\022\uffce\023\uffce\025\uffce\026\uffce\027\uffce\030\uffce\031" +
-    "\uffce\032\uffce\033\067\036\055\037\054\042\uffce\043\uffce" +
+    "\uffce\032\uffce\033\uffce\036\055\037\054\042\uffce\043\uffce" +
     "\044\uffce\045\uffce\046\uffce\047\uffce\050\uffce\051\uffce\053" +
     "\uffce\001\002\000\054\017\uffc5\022\uffc5\023\uffc5\025\uffc5" +
     "\026\uffc5\027\070\030\057\031\066\032\062\033\067\036" +
