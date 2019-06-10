@@ -16,6 +16,7 @@ public class Sym {
   public static final int false_ = 9;
   public static final int char_ = 49;
   public static final int null_ = 7;
+  public static final int do_ = 58;
   public static final int coma = 17;
   public static final int igual = 42;
   public static final int double_ = 48;
@@ -124,7 +125,8 @@ public class Sym {
   "if_",
   "else_",
   "break_",
-  "while_"
+  "while_",
+  "do_"
   };
 }
 

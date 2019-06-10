@@ -64,14 +64,14 @@ public class Lexico implements java_cup.runtime.Scanner {
     "\1\17\1\20\1\21\1\22\1\23\1\24\1\25\1\26"+
     "\1\27\1\30\1\31\1\32\2\1\1\33\2\34\1\35"+
     "\1\36\2\34\1\37\1\36\1\0\1\40\1\0\1\41"+
-    "\1\42\1\4\1\43\13\4\1\44\1\45\1\46\1\47"+
-    "\1\50\1\51\1\52\1\53\1\54\1\55\1\34\1\56"+
-    "\1\57\1\60\1\61\1\34\1\62\1\63\2\40\1\0"+
-    "\1\64\13\4\2\34\2\0\1\65\1\66\3\4\1\67"+
-    "\1\70\4\4\1\34\1\40\2\34\1\40\1\34\1\0"+
-    "\1\40\2\4\1\71\1\4\1\72\1\73\1\74\1\34"+
-    "\1\40\1\34\1\40\1\75\1\4\1\76\1\4\1\77"+
-    "\3\4\1\100";
+    "\1\42\1\4\1\43\2\4\1\44\10\4\1\45\1\46"+
+    "\1\47\1\50\1\51\1\52\1\53\1\54\1\55\1\56"+
+    "\1\34\1\57\1\60\1\61\1\62\1\34\1\63\1\64"+
+    "\2\40\1\0\1\65\13\4\2\34\2\0\1\66\1\67"+
+    "\3\4\1\70\1\71\4\4\1\34\1\40\2\34\1\40"+
+    "\1\34\1\0\1\40\2\4\1\72\1\4\1\73\1\74"+
+    "\1\75\1\34\1\40\1\34\1\40\1\76\1\4\1\77"+
+    "\1\4\1\100\3\4\1\101";
 
   private static int [] zzUnpackAction() {
     int [] result = new int[146];
@@ -793,261 +793,265 @@ public class Lexico implements java_cup.runtime.Scanner {
                     }
                     this.valorError += yytext();
             }
-          case 65: break;
+          case 66: break;
           case 2: 
             { return symbol(Sym.entero, yytext());
             }
-          case 66: break;
+          case 67: break;
           case 3: 
             { return symbol(Sym.punto);
             }
-          case 67: break;
+          case 68: break;
           case 4: 
             { return symbol(Sym.id, yytext());
             }
-          case 68: break;
+          case 69: break;
           case 5: 
             { if(this.isError){this.valorError += " ";}
             }
-          case 69: break;
+          case 70: break;
           case 6: 
             { return symbol(Sym.diagonal);
             }
-          case 70: break;
+          case 71: break;
           case 7: 
             { return symbol(Sym.asterisco);
             }
-          case 71: break;
+          case 72: break;
           case 8: 
             { string.setLength(0); yybegin(STRING);
             }
-          case 72: break;
+          case 73: break;
           case 9: 
             { string.setLength(0); yybegin(CHAR);
             }
-          case 73: break;
+          case 74: break;
           case 10: 
             { return symbol(Sym.llaveIzquierda);
             }
-          case 74: break;
+          case 75: break;
           case 11: 
             { return symbol(Sym.llaveDerecha);
             }
-          case 75: break;
+          case 76: break;
           case 12: 
             { return symbol(Sym.parIzquierda);
             }
-          case 76: break;
+          case 77: break;
           case 13: 
             { return symbol(Sym.parDerecha);
             }
-          case 77: break;
+          case 78: break;
           case 14: 
             { return symbol(Sym.corcheteIzquierda);
             }
-          case 78: break;
+          case 79: break;
           case 15: 
             { return symbol(Sym.corcheteDerecha);
             }
-          case 79: break;
+          case 80: break;
           case 16: 
             { return symbol(Sym.puntoycoma);
             }
-          case 80: break;
+          case 81: break;
           case 17: 
             { return symbol(Sym.coma);
             }
-          case 81: break;
+          case 82: break;
           case 18: 
             { return symbol(Sym.dospuntos);
             }
-          case 82: break;
+          case 83: break;
           case 19: 
             { return symbol(Sym.interrogacion);
             }
-          case 83: break;
+          case 84: break;
           case 20: 
             { return symbol(Sym.mas);
             }
-          case 84: break;
+          case 85: break;
           case 21: 
             { return symbol(Sym.menos);
             }
-          case 85: break;
+          case 86: break;
           case 22: 
             { return symbol(Sym.modulo);
             }
-          case 86: break;
+          case 87: break;
           case 23: 
             { return symbol(Sym.mayorque);
             }
-          case 87: break;
+          case 88: break;
           case 24: 
             { return symbol(Sym.menorque);
             }
-          case 88: break;
+          case 89: break;
           case 25: 
             { return symbol(Sym.igual);
             }
-          case 89: break;
+          case 90: break;
           case 26: 
             { return symbol(Sym.not);
             }
-          case 90: break;
+          case 91: break;
           case 27: 
             { return symbol(Sym.xor);
             }
-          case 91: break;
+          case 92: break;
           case 28: 
             { string.append( yytext() );
             }
-          case 92: break;
+          case 93: break;
           case 29: 
             { yybegin(YYINITIAL);
 					   return symbol(Sym.tstring, string.toString());
             }
-          case 93: break;
+          case 94: break;
           case 30: 
             { string.append('\\');
             }
-          case 94: break;
+          case 95: break;
           case 31: 
             { yybegin(YYINITIAL);
 					   return symbol(Sym.tchar, string.toString());
             }
-          case 95: break;
+          case 96: break;
           case 32: 
             { /* se ignora */
             }
-          case 96: break;
+          case 97: break;
           case 33: 
             { return symbol(Sym.diagonaligual);
             }
-          case 97: break;
+          case 98: break;
           case 34: 
             { return symbol(Sym.porigual);
             }
-          case 98: break;
+          case 99: break;
           case 35: 
             { return symbol(Sym.if_);
             }
-          case 99: break;
-          case 36: 
-            { return symbol(Sym.masmas);
-            }
           case 100: break;
-          case 37: 
-            { return symbol(Sym.masigual);
+          case 36: 
+            { return symbol(Sym.do_);
             }
           case 101: break;
-          case 38: 
-            { return symbol(Sym.menosmenos);
+          case 37: 
+            { return symbol(Sym.masmas);
             }
           case 102: break;
-          case 39: 
-            { return symbol(Sym.menosigual);
+          case 38: 
+            { return symbol(Sym.masigual);
             }
           case 103: break;
-          case 40: 
-            { return symbol(Sym.mayorigual);
+          case 39: 
+            { return symbol(Sym.menosmenos);
             }
           case 104: break;
-          case 41: 
-            { return symbol(Sym.menorigual);
+          case 40: 
+            { return symbol(Sym.menosigual);
             }
           case 105: break;
-          case 42: 
-            { return symbol(Sym.igualigual);
+          case 41: 
+            { return symbol(Sym.mayorigual);
             }
           case 106: break;
-          case 43: 
-            { return symbol(Sym.diferente);
+          case 42: 
+            { return symbol(Sym.menorigual);
             }
           case 107: break;
-          case 44: 
-            { return symbol(Sym.and);
+          case 43: 
+            { return symbol(Sym.igualigual);
             }
           case 108: break;
-          case 45: 
-            { return symbol(Sym.or);
+          case 44: 
+            { return symbol(Sym.diferente);
             }
           case 109: break;
-          case 46: 
-            { string.append('\n');
+          case 45: 
+            { return symbol(Sym.and);
             }
           case 110: break;
-          case 47: 
-            { string.append('\t');
+          case 46: 
+            { return symbol(Sym.or);
             }
           case 111: break;
-          case 48: 
-            { string.append('\r');
+          case 47: 
+            { string.append('\n');
             }
           case 112: break;
-          case 49: 
-            { string.append('\"');
+          case 48: 
+            { string.append('\t');
             }
           case 113: break;
-          case 50: 
-            { string.append('\'');
+          case 49: 
+            { string.append('\r');
             }
           case 114: break;
-          case 51: 
-            { return symbol(Sym.decimal, yytext());
+          case 50: 
+            { string.append('\"');
             }
           case 115: break;
-          case 52: 
-            { return symbol(Sym.int_);
+          case 51: 
+            { string.append('\'');
             }
           case 116: break;
-          case 53: 
-            { return symbol(Sym.null_);
+          case 52: 
+            { return symbol(Sym.decimal, yytext());
             }
           case 117: break;
-          case 54: 
-            { return symbol(Sym.true_);
+          case 53: 
+            { return symbol(Sym.int_);
             }
           case 118: break;
-          case 55: 
-            { return symbol(Sym.else_);
+          case 54: 
+            { return symbol(Sym.null_);
             }
           case 119: break;
-          case 56: 
-            { return symbol(Sym.char_);
+          case 55: 
+            { return symbol(Sym.true_);
             }
           case 120: break;
-          case 57: 
-            { return symbol(Sym.break_);
+          case 56: 
+            { return symbol(Sym.else_);
             }
           case 121: break;
-          case 58: 
-            { return symbol(Sym.print_);
+          case 57: 
+            { return symbol(Sym.char_);
             }
           case 122: break;
-          case 59: 
-            { return symbol(Sym.false_);
+          case 58: 
+            { return symbol(Sym.break_);
             }
           case 123: break;
-          case 60: 
-            { return symbol(Sym.while_);
+          case 59: 
+            { return symbol(Sym.print_);
             }
           case 124: break;
-          case 61: 
-            { return symbol(Sym.double_);
+          case 60: 
+            { return symbol(Sym.false_);
             }
           case 125: break;
-          case 62: 
-            { return symbol(Sym.string_);
+          case 61: 
+            { return symbol(Sym.while_);
             }
           case 126: break;
-          case 63: 
-            { return symbol(Sym.boolean_);
+          case 62: 
+            { return symbol(Sym.double_);
             }
           case 127: break;
-          case 64: 
-            { return symbol(Sym.printTabla_);
+          case 63: 
+            { return symbol(Sym.string_);
             }
           case 128: break;
+          case 64: 
+            { return symbol(Sym.boolean_);
+            }
+          case 129: break;
+          case 65: 
+            { return symbol(Sym.printTabla_);
+            }
+          case 130: break;
           default:
             zzScanError(ZZ_NO_MATCH);
         }
