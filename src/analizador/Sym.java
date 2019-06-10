@@ -43,7 +43,6 @@ public class Sym {
   public static final int menorque = 31;
   public static final int parDerecha = 13;
   public static final int xor = 39;
-  public static final int potencia = 25;
   public static final int id = 6;
   public static final int string_ = 49;
   public static final int mayorigual = 32;
@@ -55,6 +54,7 @@ public class Sym {
   public static final int umenos = 26;
   public static final int asterisco = 23;
   public static final int interrogacion = 20;
+  public static final int modulo = 25;
   public static final int decimal = 5;
   public static final int diagonal = 24;
   public static final int boolean_ = 48;
@@ -85,7 +85,7 @@ public class Sym {
   "menos",
   "asterisco",
   "diagonal",
-  "potencia",
+  "modulo",
   "umenos",
   "umas",
   "masmas",

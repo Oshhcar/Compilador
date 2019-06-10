@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package analizador.ast.expresion.Operacion;
+package analizador.ast.expresion.operacion;
 
 import analizador.ast.entorno.Entorno;
 import analizador.ast.entorno.Tipo;
@@ -30,7 +30,8 @@ public class Operacion extends Expresion{
         RESTA,
         MULTIPLICACION, 
         DIVISION,
-        POTENCIA
+        POTENCIA,
+        MODULO
     }
     
     @Override
@@ -41,6 +42,27 @@ public class Operacion extends Expresion{
     @Override
     public Object getValor(Entorno e, Object salida) {
         return null;
+    }
+
+    /**
+     * @return the op1
+     */
+    public Expresion getOp1() {
+        return op1;
+    }
+
+    /**
+     * @return the op2
+     */
+    public Expresion getOp2() {
+        return op2;
+    }
+
+    /**
+     * @return the operador
+     */
+    public Operador getOperador() {
+        return operador;
     }
 
     

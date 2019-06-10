@@ -8,6 +8,7 @@ import java.util.HashMap;
 import analizador.ast.*;
 import analizador.ast.entorno.*;
 import analizador.ast.expresion.*;
+import analizador.ast.expresion.operacion.*;
 import analizador.ast.instruccion.*;
 
 parser code
@@ -45,7 +46,7 @@ action code
 terminal String tstring, tchar, entero, decimal, id, null_, true_, false_;
 terminal llaveIzquierda, llaveDerecha, parIzquierda, parDerecha, corcheteIzquierda, corcheteDerecha, puntoycoma, coma, punto;
 terminal dospuntos, interrogacion;
-terminal mas, menos, asterisco, diagonal, potencia, umenos, umas, masmas, menosmenos;
+terminal mas, menos, asterisco, diagonal, modulo, umenos, umas, masmas, menosmenos;
 terminal mayorque, menorque, mayorigual, menorigual, igualigual, diferente;
 terminal and, or, not, xor;
 terminal igual, masigual, menosigual, porigual, diagonaligual;
@@ -72,7 +73,7 @@ precedence left diferente;
 precedence left mayorque, menorque, mayorigual, menorigual;
 precedence left mas, menos;
 precedence left asterisco, diagonal;
-precedence right potencia;
+precedence right modulo;
 precedence right masmas, menosmenos;
 precedence right umenos, umas;
 
@@ -91,18 +92,18 @@ SENTENCIA ::= print_ parIzquierda E:e parDerecha puntoycoma {: RESULT = new Prin
             | DECLARACION:a puntoycoma {: RESULT = a; :}
             | ASIGNACION:a puntoycoma {: RESULT = a; :};
             
-DECLARACION ::= TIPO:a DECLARACION_LISTA:b {: RESULT = new Declaracion(a, b, aleft, bright); :};
+DECLARACION ::= TIPO:a DECLARACION_LISTA:b {: RESULT = new Declaracion(a, b, aleft, aright); :};
 
 DECLARACION_LISTA ::= DECLARACION_LISTA:a coma DECLA_ASIGNA:b {: RESULT = a; RESULT.add(b);  :}
                     | DECLA_ASIGNA:a {: RESULT = new ArrayList<>(); RESULT.add(a); :};
 
-DECLA_ASIGNA ::= DECLARACION_ID:a igual E:b {: RESULT = new Asignacion(a, b, aleft, aright); :}
+DECLA_ASIGNA ::= DECLARACION_ID:a igual:x E:b {: RESULT = new Asignacion(a, b, xleft, xright+1); :}
                 |DECLARACION_ID:a {: RESULT = new Asignacion(a, aleft, aright); :};
 
 DECLARACION_ID ::= DECLARACION_ID:a corcheteIzquierda corcheteDerecha {:RESULT = a; RESULT.addDimension(); :}
                 | id:a {: RESULT = new Identificador(a, aleft, aright); :};
 
-ASIGNACION ::= id:a igual E:b {: RESULT = new Asignacion(new Identificador(a, aleft, aright), aleft, aright); :};
+ASIGNACION ::= id:a igual E:b {: RESULT = new Asignacion(new Identificador(a, aleft, aright), b, aleft, aright); :};
 
 TIPO ::= int_ {: RESULT = Tipo.INT; :}
         |double_ {: RESULT = Tipo.DOUBLE; :}
@@ -110,7 +111,12 @@ TIPO ::= int_ {: RESULT = Tipo.INT; :}
         |char_ {: RESULT = Tipo.CHAR; :}
         |boolean_ {: RESULT = Tipo.BOOLEAN; :};
 
-E ::= entero:a {: RESULT = new Literal(Tipo.INT, new Integer(a), aleft, aright); :}
+E ::= E:a mas:x E:b {: RESULT = new Aritmetica(a, b, Operacion.Operador.SUMA, xleft, xright); :}
+    | E:a menos:x E:b {: RESULT = new Aritmetica(a, b, Operacion.Operador.RESTA, xleft, xright); :}
+    | E:a asterisco:x E:b {: RESULT = new Aritmetica(a, b, Operacion.Operador.MULTIPLICACION, xleft, xright); :}
+    | E:a diagonal:x E:b {: RESULT = new Aritmetica(a, b, Operacion.Operador.DIVISION, xleft, xright); :}
+    | E:a modulo:x E:b {: RESULT = new Aritmetica(a, b, Operacion.Operador.MODULO, xleft, xright); :}
+    | entero:a {: RESULT = new Literal(Tipo.INT, new Integer(a), aleft, aright); :}
     | decimal:a {: RESULT = new Literal(Tipo.DOUBLE, new Double(a), aleft, aright); :}
     | tstring:a {: RESULT = new Literal(Tipo.STRING, a, aleft, aright); :}
     | tchar:a {: RESULT = new Literal(Tipo.CHAR, a.charAt(0), aleft, aright); :}

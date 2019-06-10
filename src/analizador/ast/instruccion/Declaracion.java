@@ -37,23 +37,27 @@ public class Declaracion extends Instruccion {
                 Expresion valor = asigna.getValor();
                 if (valor != null) {
                     Tipo tipValor = valor.getTipo(e, salida);
-                    if (this.tipo == tipValor) {
-                        Object valValor = valor.getValor(e, salida);
-                        if(valValor != null){
-                            tmp = new Simbolo(this.tipo, id, valValor);
-                            e.add(id, tmp);
+                    if (tipValor != null) {
+                        if (this.tipo == tipValor) {
+                            Object valValor = valor.getValor(e, salida);
+                            if (valValor != null) {
+                                tmp = new Simbolo(this.tipo, id, valValor);
+                                e.add(id, tmp);
+                                continue;
+                            }
                         }
-                    } else {
-                        ((JTextArea) salida).append("*Error Semántico, no se puede asignar el valor. ");
-                        ((JTextArea) salida).append("Línea: " + this.getLinea() + " Columna: " + this.getColumna() + ". \n");
                     }
+
+                    ((JTextArea) salida).append("*Error Semántico, no se puede asignar el valor. ");
+                    ((JTextArea) salida).append("Línea: " + asigna.getLinea() + " Columna: " + asigna.getColumna() + ". \n");
+
                 } else {
                     tmp = new Simbolo(this.tipo, id);
                     e.add(id, tmp);
                 }
             } else {
                 ((JTextArea) salida).append("*Error Semántico, Ya se ha declarado la variable: " + asigna.getId().getId() + ". ");
-                ((JTextArea) salida).append("Línea: " + this.getLinea() + " Columna: " + this.getColumna() + ". \n");
+                ((JTextArea) salida).append("Línea: " + asigna.getLinea() + " Columna: " + asigna.getColumna() + ". \n");
             }
         }
 

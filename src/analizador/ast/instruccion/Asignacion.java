@@ -16,10 +16,11 @@ import javax.swing.JTextArea;
  *
  * @author oscar
  */
-public class Asignacion extends Instruccion{
+public class Asignacion extends Instruccion {
+
     private final Identificador id;
     private final Expresion valor;
-    
+
     public Asignacion(Identificador id, int linea, int columna) {
         super(linea, columna);
         this.id = id;
@@ -35,20 +36,23 @@ public class Asignacion extends Instruccion{
     @Override
     public Object ejecutar(Entorno e, Object salida) {
         Simbolo tmp = e.get(this.id.getId());
-        if(tmp != null){
+        if (tmp != null) {
             Tipo tipValor = this.valor.getTipo(e, salida);
-            if(tmp.getTipo() == tipValor){
-                Object valValor = this.valor.getValor(e, salida);
-                if(valValor != null){
-                    tmp.setValor(valValor);
+            if (tipValor != null) {
+                if (tmp.getTipo() == tipValor) {
+                    Object valValor = this.valor.getValor(e, salida);
+                    if (valValor != null) {
+                        tmp.setValor(valValor);
+                        return null;
+                    }
                 }
-            } else {
-                ((JTextArea)salida).append("*Error Semántico, no se puede asignar el valor. ");
-                ((JTextArea)salida).append("Línea: " + this.getLinea() + " Columna: " + this.getColumna() +". \n");
             }
+            ((JTextArea) salida).append("*Error Semántico, no se puede asignar el valor. ");
+            ((JTextArea) salida).append("Línea: " + this.getLinea() + " Columna: " + this.getColumna() + ". \n");
+
         } else {
-            ((JTextArea)salida).append("*Error Semántico, no se ha declarado la variable: " + this.id.getId() +". ");
-            ((JTextArea)salida).append("Línea: " + this.getLinea() + " Columna: " + this.getColumna() +". \n");
+            ((JTextArea) salida).append("*Error Semántico, no se ha declarado la variable: " + this.id.getId() + ". ");
+            ((JTextArea) salida).append("Línea: " + this.getLinea() + " Columna: " + this.getColumna() + ". \n");
         }
         return null;
     }
@@ -66,5 +70,5 @@ public class Asignacion extends Instruccion{
     public Expresion getValor() {
         return valor;
     }
-    
+
 }
