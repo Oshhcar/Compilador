@@ -17,10 +17,11 @@ import java.util.ArrayList;
  *
  * @author oscar
  */
-public class While extends Instruccion{
+public class While extends Instruccion {
+
     private final Expresion condicion;
     private final ArrayList<NodoAst> bloques;
-    
+
     public While(Expresion condicion, ArrayList<NodoAst> bloques, int linea, int columna) {
         super(linea, columna);
         this.condicion = condicion;
@@ -29,47 +30,44 @@ public class While extends Instruccion{
 
     @Override
     public Object ejecutar(Entorno e, Object salida) {
-        if(this.bloques != null){
-            while(true){
+        if (this.bloques != null) {
+            while (true) {
+                Entorno local = new Entorno(e);
                 Tipo tipCond = this.condicion.getTipo(e, salida);
-                if(tipCond != null){
-                    if(tipCond == Tipo.BOOLEAN){
+                if (tipCond != null) {
+                    if (tipCond == Tipo.BOOLEAN) {
                         Object valCond = this.condicion.getValor(e, salida);
-                        if(valCond != null){
-                            if(Boolean.valueOf(valCond.toString())){
-                                for(NodoAst bloque: this.bloques){
-                                    if(bloque instanceof Instruccion){
-                                        if(bloque instanceof Break){
+                        if (valCond != null) {
+                            if (Boolean.valueOf(valCond.toString())) {
+                                for (NodoAst bloque : this.bloques) {
+                                    if (bloque instanceof Instruccion) {
+                                        if (bloque instanceof Break) {
                                             return null;
                                         } else {
-                                            Object obj = ((Instruccion)bloque).ejecutar(e, salida);
-                                            
-                                            if(obj != null){
-                                                if(obj instanceof Break){
+                                            Object obj = ((Instruccion) bloque).ejecutar(local, salida);
+
+                                            if (obj != null) {
+                                                if (obj instanceof Break) {
                                                     return null;
-                                                }
+                                                }/*return*/
                                             }
                                         }
                                     } else {
-                                        Object obj = ((Expresion)bloque).getValor(e, salida);
+                                        Object obj = ((Expresion) bloque).getValor(local, salida);
                                         /*return*/
                                     }
                                 }
+                                continue;
                             } else {
-                                return null;
+                                break;
                             }
-                        } else {
-                            return null;
                         }
-                    } else {
-                        return null;
                     }
-                } else {
-                    return null;
                 }
+                return null;
             }
         }
         return null;
     }
-    
+
 }
