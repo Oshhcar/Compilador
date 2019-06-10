@@ -116,6 +116,14 @@ E ::= E:a mas:x E:b {: RESULT = new Aritmetica(a, b, Operacion.Operador.SUMA, xl
     | E:a asterisco:x E:b {: RESULT = new Aritmetica(a, b, Operacion.Operador.MULTIPLICACION, xleft, xright); :}
     | E:a diagonal:x E:b {: RESULT = new Aritmetica(a, b, Operacion.Operador.DIVISION, xleft, xright); :}
     | E:a modulo:x E:b {: RESULT = new Aritmetica(a, b, Operacion.Operador.MODULO, xleft, xright); :}
+
+    | E:a mayorque:x E:b {: RESULT = new Relacional(a, b, Operacion.Operador.MAYORQUE, xleft, xright); :}
+    | E:a menorque:x E:b {: RESULT = new Relacional(a, b, Operacion.Operador.MENORQUE, xleft, xright); :}
+    | E:a mayorigual:x E:b {: RESULT = new Relacional(a, b, Operacion.Operador.MAYORIGUAL, xleft, xright); :}
+    | E:a menorigual:x E:b {: RESULT = new Relacional(a, b, Operacion.Operador.MENORIGUAL, xleft, xright); :}
+    | E:a igualigual:x E:b {: RESULT = new Relacional(a, b, Operacion.Operador.IGUAL, xleft, xright); :}
+    | E:a diferente:x E:b {: RESULT = new Relacional(a, b, Operacion.Operador.DIFERENTE, xleft, xright); :}
+
     | entero:a {: RESULT = new Literal(Tipo.INT, new Integer(a), aleft, aright); :}
     | decimal:a {: RESULT = new Literal(Tipo.DOUBLE, new Double(a), aleft, aright); :}
     | tstring:a {: RESULT = new Literal(Tipo.STRING, a, aleft, aright); :}

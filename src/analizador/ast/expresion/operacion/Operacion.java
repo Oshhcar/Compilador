@@ -31,7 +31,13 @@ public class Operacion extends Expresion{
         MULTIPLICACION, 
         DIVISION,
         POTENCIA,
-        MODULO
+        MODULO,
+        MAYORQUE,
+        MENORQUE,
+        MAYORIGUAL,
+        MENORIGUAL,
+        IGUAL,
+        DIFERENTE,
     }
     
     @Override
