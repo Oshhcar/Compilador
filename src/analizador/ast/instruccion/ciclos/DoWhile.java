@@ -63,7 +63,7 @@ public class DoWhile extends Instruccion {
                         }
                     }
                 }
-                return null;
+                break;
             }
         }
         return null;

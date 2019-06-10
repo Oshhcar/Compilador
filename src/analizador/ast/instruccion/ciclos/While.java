@@ -58,13 +58,12 @@ public class While extends Instruccion {
                                     }
                                 }
                                 continue;
-                            } else {
-                                break;
                             }
+                            break;
                         }
                     }
                 }
-                return null;
+                break;
             }
         }
         return null;
