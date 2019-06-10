@@ -46,7 +46,7 @@ action code
 terminal String tstring, tchar, entero, decimal, id, null_, true_, false_;
 terminal llaveIzquierda, llaveDerecha, parIzquierda, parDerecha, corcheteIzquierda, corcheteDerecha, puntoycoma, coma, punto;
 terminal dospuntos, interrogacion;
-terminal mas, menos, asterisco, diagonal, modulo, umenos, umas, masmas, menosmenos;
+terminal mas, menos, asterisco, diagonal, modulo, umenos, umas, masmas, menosmenos, umasmas, umenosmenos;
 terminal mayorque, menorque, mayorigual, menorigual, igualigual, diferente;
 terminal and, or, not, xor;
 terminal igual, masigual, menosigual, porigual, diagonaligual;
@@ -56,6 +56,7 @@ terminal print_;
 non terminal INICIO;
 non terminal ArrayList<NodoAst> SENTENCIAS;
 non terminal NodoAst SENTENCIA; 
+non terminal Expresion UNARIO;
 non terminal Tipo TIPO;
 non terminal Declaracion DECLARACION;
 non terminal ArrayList<Asignacion> DECLARACION_LISTA;
@@ -76,6 +77,7 @@ precedence left mas, menos;
 precedence left asterisco, diagonal;
 precedence right modulo;
 precedence right masmas, menosmenos;
+precedence right umasmas, umenosmenos;
 precedence right umenos, umas;
 
 start with INICIO;
@@ -90,9 +92,15 @@ SENTENCIAS ::= SENTENCIAS:a SENTENCIA:b {: RESULT = a; RESULT.add(b); :}
             | SENTENCIA:a {: RESULT = new ArrayList<>(); RESULT.add(a); :};
 
 SENTENCIA ::= print_ parIzquierda E:e parDerecha puntoycoma {: RESULT = new Print(e, eleft, eright); :}
+            | UNARIO:a puntoycoma {: RESULT = a; :}
             | DECLARACION:a puntoycoma {: RESULT = a; :}
             | ASIGNACION:a puntoycoma {: RESULT = a; :};
-            
+
+UNARIO ::=  id:a masmas:x {: RESULT = new PostFijo(new Identificador(a, aleft, aright), Operacion.Operador.AUMENTO, xleft+1, xright+1); :}
+           | id:a menosmenos:x {: RESULT = new PostFijo(new Identificador(a, aleft, aright), Operacion.Operador.DECREMENTO, xleft+1, xright+1); :}
+           | masmas:x id:a {: RESULT = new PreFijo(new Identificador(a, aleft, aright), Operacion.Operador.AUMENTO, xleft+1, xright+1); :} 
+           | menosmenos:x id:a {: RESULT = new PreFijo(new Identificador(a, aleft, aright), Operacion.Operador.DECREMENTO, xleft+1, xright+1); :};
+
 DECLARACION ::= TIPO:a DECLARACION_LISTA:b {: RESULT = new Declaracion(a, b, aleft, aright); :};
 
 DECLARACION_LISTA ::= DECLARACION_LISTA:a coma DECLA_ASIGNA:b {: RESULT = a; RESULT.add(b);  :}
@@ -117,6 +125,13 @@ E ::= E:a mas:x E:b {: RESULT = new Aritmetica(a, b, Operacion.Operador.SUMA, xl
     | E:a asterisco:x E:b {: RESULT = new Aritmetica(a, b, Operacion.Operador.MULTIPLICACION, xleft, xright); :}
     | E:a diagonal:x E:b {: RESULT = new Aritmetica(a, b, Operacion.Operador.DIVISION, xleft, xright); :}
     | E:a modulo:x E:b {: RESULT = new Aritmetica(a, b, Operacion.Operador.MODULO, xleft, xright); :}
+    | menos:x E:a {:RESULT = new Aritmetica(a, new Literal(Tipo.INT, -1, 0,0), Operacion.Operador.MULTIPLICACION, xleft+1, xright+1);:} %prec umenos
+    | mas:x E:a {: RESULT = new Aritmetica(a, new Literal(Tipo.INT, 1, 0,0), Operacion.Operador.MULTIPLICACION, xleft+1, xright+1);:} %prec umas
+
+    | E:a masmas:x {: RESULT = new PostFijo(a, Operacion.Operador.AUMENTO, xleft+1, xright+1); :}
+    | E:a menosmenos:x {: RESULT = new PostFijo(a, Operacion.Operador.DECREMENTO, xleft+1, xright+1); :}
+    | masmas:x E:a {: RESULT = new PreFijo(a, Operacion.Operador.AUMENTO, xleft+1, xright+1); :} %prec umasmas
+    | menosmenos:x E:a {: RESULT = new PreFijo(a, Operacion.Operador.DECREMENTO, xleft+1, xright+1); :} %prec umenosmenos
 
     | E:a mayorque:x E:b {: RESULT = new Relacional(a, b, Operacion.Operador.MAYORQUE, xleft, xright); :}
     | E:a menorque:x E:b {: RESULT = new Relacional(a, b, Operacion.Operador.MENORQUE, xleft, xright); :}

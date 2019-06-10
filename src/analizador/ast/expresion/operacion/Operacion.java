@@ -41,7 +41,9 @@ public class Operacion extends Expresion{
         AND,
         OR,
         NOT,
-        XOR
+        XOR,
+        AUMENTO,
+        DECREMENTO
     }
     
     @Override
