@@ -40,6 +40,7 @@ public class Sym {
   public static final int or = 39;
   public static final int entero = 4;
   public static final int parIzquierda = 12;
+  public static final int while_ = 57;
   public static final int menorigual = 35;
   public static final int punto = 18;
   public static final int corcheteDerecha = 15;
@@ -48,6 +49,7 @@ public class Sym {
   public static final int parDerecha = 13;
   public static final int xor = 41;
   public static final int id = 6;
+  public static final int break_ = 56;
   public static final int umasmas = 30;
   public static final int string_ = 51;
   public static final int mayorigual = 34;
@@ -120,7 +122,9 @@ public class Sym {
   "print_",
   "printTabla_",
   "if_",
-  "else_"
+  "else_",
+  "break_",
+  "while_"
   };
 }
 
