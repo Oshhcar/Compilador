@@ -145,6 +145,8 @@ E ::= E:a mas:x E:b {: RESULT = new Aritmetica(a, b, Operacion.Operador.SUMA, xl
     | not:x E:b {: RESULT = new Logica(b, Operacion.Operador.NOT, xleft, xright); :}
     | E:a xor:x E:b {: RESULT = new Logica(a, b, Operacion.Operador.XOR, xleft, xright); :}
 
+    | E:a interrogacion:x E:b dospuntos E:c{:RESULT = new Ternario(a, b, c, xleft+1, xright+1);:}
+
     | entero:a {: RESULT = new Literal(Tipo.INT, new Integer(a), aleft, aright); :}
     | decimal:a {: RESULT = new Literal(Tipo.DOUBLE, new Double(a), aleft, aright); :}
     | tstring:a {: RESULT = new Literal(Tipo.STRING, a, aleft, aright); :}
