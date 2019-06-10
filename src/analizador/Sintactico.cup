@@ -51,7 +51,7 @@ terminal mayorque, menorque, mayorigual, menorigual, igualigual, diferente;
 terminal and, or, not, xor;
 terminal igual, masigual, menosigual, porigual, diagonaligual;
 terminal int_, double_, char_, boolean_, string_;
-terminal print_;
+terminal print_, printTabla_;
 
 non terminal INICIO;
 non terminal ArrayList<NodoAst> SENTENCIAS;
@@ -92,6 +92,7 @@ SENTENCIAS ::= SENTENCIAS:a SENTENCIA:b {: RESULT = a; RESULT.add(b); :}
             | SENTENCIA:a {: RESULT = new ArrayList<>(); RESULT.add(a); :};
 
 SENTENCIA ::= print_ parIzquierda E:e parDerecha puntoycoma {: RESULT = new Print(e, eleft, eright); :}
+            | printTabla_:a parIzquierda parDerecha puntoycoma {: RESULT = new PrintTabla(aleft, aright); :}
             | UNARIO:a puntoycoma {: RESULT = a; :}
             | DECLARACION:a puntoycoma {: RESULT = a; :}
             | ASIGNACION:a puntoycoma {: RESULT = a; :};

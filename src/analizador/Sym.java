@@ -9,6 +9,7 @@ package analizador;
 public class Sym {
   /* terminals */
   public static final int igualigual = 36;
+  public static final int printTabla_ = 53;
   public static final int porigual = 45;
   public static final int menosigual = 44;
   public static final int print_ = 52;
@@ -114,7 +115,8 @@ public class Sym {
   "char_",
   "boolean_",
   "string_",
-  "print_"
+  "print_",
+  "printTabla_"
   };
 }
 
