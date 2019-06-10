@@ -96,6 +96,8 @@ COMENT_MULTI ="/*""/"*([^*/]|[^*]"/"|"*"[^/])*"*"*"*/"
 
 <YYINITIAL> "print"			{ return symbol(Sym.print_);}
 <YYINITIAL> "printTabla"                { return symbol(Sym.printTabla_);}
+<YYINITIAL> "if"                        { return symbol(Sym.if_);}
+<YYINITIAL> "else"                      { return symbol(Sym.else_);}
 
 <YYINITIAL> "null"			{ return symbol(Sym.null_);}
 <YYINITIAL> "true"			{ return symbol(Sym.true_);}

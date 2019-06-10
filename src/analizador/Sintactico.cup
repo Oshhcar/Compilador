@@ -10,6 +10,7 @@ import analizador.ast.entorno.*;
 import analizador.ast.expresion.*;
 import analizador.ast.expresion.operacion.*;
 import analizador.ast.instruccion.*;
+import analizador.ast.instruccion.condicionales.*;
 
 parser code
 {:
@@ -51,7 +52,7 @@ terminal mayorque, menorque, mayorigual, menorigual, igualigual, diferente;
 terminal and, or, not, xor;
 terminal igual, masigual, menosigual, porigual, diagonaligual;
 terminal int_, double_, char_, boolean_, string_;
-terminal print_, printTabla_;
+terminal print_, printTabla_, if_, else_;
 
 non terminal INICIO;
 non terminal ArrayList<NodoAst> SENTENCIAS;
@@ -63,6 +64,12 @@ non terminal ArrayList<Asignacion> DECLARACION_LISTA;
 non terminal Asignacion DECLA_ASIGNA;
 non terminal Identificador DECLARACION_ID;
 non terminal Asignacion ASIGNACION;
+non terminal If IF;
+non terminal SubIf ELSE;
+non terminal ArrayList<SubIf> ELSEIF;
+non terminal ArrayList<NodoAst> BLOQUES_L;
+non terminal ArrayList<NodoAst> BLOQUES;
+non terminal NodoAst BLOQUE;
 non terminal Expresion E;
 
 precedence left interrogacion;
@@ -95,7 +102,8 @@ SENTENCIA ::= print_ parIzquierda E:e parDerecha puntoycoma {: RESULT = new Prin
             | printTabla_:a parIzquierda parDerecha puntoycoma {: RESULT = new PrintTabla(aleft, aright); :}
             | UNARIO:a puntoycoma {: RESULT = a; :}
             | DECLARACION:a puntoycoma {: RESULT = a; :}
-            | ASIGNACION:a puntoycoma {: RESULT = a; :};
+            | ASIGNACION:a puntoycoma {: RESULT = a; :}
+            | IF:a {: RESULT = a; :};
 
 UNARIO ::=  id:a masmas:x {: RESULT = new PostFijo(new Identificador(a, aleft, aright), Operacion.Operador.AUMENTO, xleft+1, xright+1); :}
            | id:a menosmenos:x {: RESULT = new PostFijo(new Identificador(a, aleft, aright), Operacion.Operador.DECREMENTO, xleft+1, xright+1); :}
@@ -120,6 +128,29 @@ TIPO ::= int_ {: RESULT = Tipo.INT; :}
         |string_ {: RESULT = Tipo.STRING; :}
         |char_ {: RESULT = Tipo.CHAR; :}
         |boolean_ {: RESULT = Tipo.BOOLEAN; :};
+
+IF ::= if_:x parIzquierda E:a parDerecha llaveIzquierda BLOQUES_L:b llaveDerecha {: RESULT = new If(a, b, xleft, xright); :}
+     |if_:x parIzquierda E:a parDerecha llaveIzquierda BLOQUES_L:b llaveDerecha ELSE:c {: RESULT = new If(a, b, xleft, xright, c); :}
+     |if_:x parIzquierda E:a parDerecha llaveIzquierda BLOQUES_L:b llaveDerecha ELSEIF:c {: RESULT = new If(a, b, xleft, xright, c); :}
+     |if_:x parIzquierda E:a parDerecha llaveIzquierda BLOQUES_L:b llaveDerecha ELSEIF:c ELSE:d {:RESULT = new If(a, b, xleft, xright, c, d);:};
+
+ELSE ::= else_:x llaveIzquierda BLOQUES_L:a llaveDerecha{: RESULT = new SubIf(a, xleft+1, xright+1); :};
+
+ELSEIF ::= ELSEIF:a else_:x if_ parIzquierda E:b parDerecha llaveIzquierda BLOQUES_L:c llaveDerecha {: RESULT = a; RESULT.add(new SubIf(b, c, xleft, xright)); :} 
+        | else_:x if_ parIzquierda E:a parDerecha llaveIzquierda BLOQUES_L:b llaveDerecha {: RESULT = new ArrayList<>(); RESULT.add(new SubIf(a, b, xleft, xright)); :};
+
+BLOQUES_L ::= {: RESULT = null; :}
+            | BLOQUES:a {: RESULT = a; :};
+
+BLOQUES ::= BLOQUES:a BLOQUE:b {: RESULT = a; RESULT.add(b); :}
+            |BLOQUE:a {: RESULT = new ArrayList<>(); RESULT.add(a); :};
+
+BLOQUE ::= print_ parIzquierda E:e parDerecha puntoycoma {: RESULT = new Print(e, eleft, eright); :}
+            | printTabla_:a parIzquierda parDerecha puntoycoma {: RESULT = new PrintTabla(aleft, aright); :}
+            | UNARIO:a puntoycoma {: RESULT = a; :}
+            | DECLARACION:a puntoycoma {: RESULT = a; :}
+            | ASIGNACION:a puntoycoma {: RESULT = a; :}
+            | IF:a {: RESULT = a; :};
 
 E ::= E:a mas:x E:b {: RESULT = new Aritmetica(a, b, Operacion.Operador.SUMA, xleft, xright); :}
     | E:a menos:x E:b {: RESULT = new Aritmetica(a, b, Operacion.Operador.RESTA, xleft, xright); :}
