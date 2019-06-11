@@ -52,10 +52,12 @@ public class Arreglo{
     }
     
     public void inicializar(){
-         Object valor = null;
+         Object valor = new Object();
         
         if(this.tipo == Tipo.INT)
-            valor = new Integer(0);
+            valor = 0;
+        else if(this.tipo == Tipo.DOUBLE)
+            valor = 0.0;
         
         for(int i = 0; i < tamaño; i++){
             arreglo.put(i, valor);
