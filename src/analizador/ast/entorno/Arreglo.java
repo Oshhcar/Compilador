@@ -25,6 +25,11 @@ public class Arreglo{
         this.dimensiones = 1;
     }
 
+    public Object get(int posicion){
+    /*verificar tamaño*/
+        return this.arreglo.get(posicion);
+    }
+    
     /**
      * @return the tipo
      */
