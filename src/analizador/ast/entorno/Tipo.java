@@ -44,6 +44,13 @@ public enum Tipo {
             return false;
         }
     
+    }, 
+    ARRAY{
+        @Override
+        public boolean isNumero() {
+            return false;
+        }
+    
     };
     
     public abstract boolean isNumero();

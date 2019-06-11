@@ -5,7 +5,9 @@
  */
 package analizador.ast.instruccion;
 
+import analizador.ast.entorno.Arreglo;
 import analizador.ast.entorno.Entorno;
+import analizador.ast.entorno.Rol;
 import analizador.ast.entorno.Simbolo;
 import analizador.ast.entorno.Tipo;
 import analizador.ast.expresion.Expresion;
@@ -42,7 +44,19 @@ public class Asignacion extends Instruccion {
                 if (tmp.getTipo() == tipValor) {
                     Object valValor = this.valor.getValor(e, salida);
                     if (valValor != null) {
-                        tmp.setValor(valValor);
+                        if (tmp.getRol() == Rol.ARREGLO) {
+                            if(valValor instanceof Arreglo){
+                                if(tmp.getTamaño() == ((Arreglo) valValor).getDimensiones()){
+                                    tmp.setValor(valValor);
+                                }else {
+                                    System.err.println("No son de las mismas dimensiones");
+                                }
+                            }else {
+                                System.err.println("No se esta asignano arreglo");
+                            }
+                        } else {
+                            tmp.setValor(valValor);
+                        }
                         return null;
                     }
                 }

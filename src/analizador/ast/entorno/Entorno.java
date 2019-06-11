@@ -61,7 +61,7 @@ public class Entorno {
         while(actual != null){
             System.out.println("Entorno " + i++);
             actual.tabla.forEach((id,s)->{
-                System.out.print(id + " : " + s.getTipo().toString());
+                System.out.print(id + " " + s.getRol() + ":" + s.getTipo().toString());
                 if(s.getValor() != null)
                     System.out.println(" -> "+s.getValor());
                 else 

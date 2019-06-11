@@ -53,7 +53,7 @@ terminal mayorque, menorque, mayorigual, menorigual, igualigual, diferente;
 terminal and, or, not, xor;
 terminal igual, masigual, menosigual, porigual, diagonaligual;
 terminal int_, double_, char_, boolean_, string_;
-terminal print_, printTabla_, if_, else_, break_, while_, do_;
+terminal print_, printTabla_, if_, else_, break_, while_, do_, new_;
 
 non terminal INICIO;
 non terminal ArrayList<NodoAst> SENTENCIAS;
@@ -73,6 +73,9 @@ non terminal ArrayList<NodoAst> BLOQUES;
 non terminal NodoAst BLOQUE;
 non terminal While WHILE;
 non terminal DoWhile DO_WHILE;
+non terminal Expresion VALOR;
+non terminal ArrayList<Expresion> DIMENSION; 
+non terminal ArrayList<Expresion> ARREGLO;
 non terminal Expresion E;
 
 precedence left interrogacion;
@@ -119,13 +122,13 @@ DECLARACION ::= TIPO:a DECLARACION_LISTA:b {: RESULT = new Declaracion(a, b, ale
 DECLARACION_LISTA ::= DECLARACION_LISTA:a coma DECLA_ASIGNA:b {: RESULT = a; RESULT.add(b);  :}
                     | DECLA_ASIGNA:a {: RESULT = new ArrayList<>(); RESULT.add(a); :};
 
-DECLA_ASIGNA ::= DECLARACION_ID:a igual:x E:b {: RESULT = new Asignacion(a, b, xleft, xright+1); :}
+DECLA_ASIGNA ::= DECLARACION_ID:a igual:x VALOR:b {: RESULT = new Asignacion(a, b, xleft, xright+1); :}
                 |DECLARACION_ID:a {: RESULT = new Asignacion(a, aleft, aright); :};
 
 DECLARACION_ID ::= DECLARACION_ID:a corcheteIzquierda corcheteDerecha {:RESULT = a; RESULT.addDimension(); :}
                 | id:a {: RESULT = new Identificador(a, aleft, aright); :};
 
-ASIGNACION ::= id:a igual E:b {: RESULT = new Asignacion(new Identificador(a, aleft, aright), b, aleft, aright); :};
+ASIGNACION ::= id:a igual VALOR:b {: RESULT = new Asignacion(new Identificador(a, aleft, aright), b, aleft, aright); :};
 
 TIPO ::= int_ {: RESULT = Tipo.INT; :}
         |double_ {: RESULT = Tipo.DOUBLE; :}
@@ -162,6 +165,16 @@ BLOQUE ::= print_ parIzquierda E:e parDerecha puntoycoma {: RESULT = new Print(e
             | break_:a puntoycoma {: RESULT = new Break(aleft, aright); :}
             | WHILE:a {: RESULT = a; :}
             | DO_WHILE:a puntoycoma {: RESULT = a; :};
+
+VALOR ::= E:a {: RESULT = a; :}
+           | new_:x TIPO:a DIMENSION:b {: RESULT = new Literal(a, b, xleft, xright); :}
+           | llaveIzquierda:x ARREGLO:a llaveDerecha {: RESULT = new Literal(a, xleft, xright);  :};
+
+DIMENSION ::= DIMENSION:a corcheteIzquierda E:b corcheteDerecha {: RESULT = a; RESULT.add(b); :}
+                |corcheteIzquierda E:a corcheteDerecha {: RESULT = new ArrayList<>(); RESULT.add(a); :}; 
+
+ARREGLO ::= ARREGLO:a coma VALOR:b {: RESULT = a; RESULT.add(b); :}
+        | VALOR:a {: RESULT = new ArrayList<>(); RESULT.add(a); :};
 
 E ::= E:a mas:x E:b {: RESULT = new Aritmetica(a, b, Operacion.Operador.SUMA, xleft, xright); :}
     | E:a menos:x E:b {: RESULT = new Aritmetica(a, b, Operacion.Operador.RESTA, xleft, xright); :}

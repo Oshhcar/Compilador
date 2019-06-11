@@ -5,7 +5,9 @@
  */
 package analizador.ast.instruccion;
 
+import analizador.ast.entorno.Arreglo;
 import analizador.ast.entorno.Entorno;
+import analizador.ast.entorno.Rol;
 import analizador.ast.entorno.Simbolo;
 import analizador.ast.entorno.Tipo;
 import analizador.ast.expresion.Expresion;
@@ -41,7 +43,21 @@ public class Declaracion extends Instruccion {
                         if (this.tipo == tipValor) {
                             Object valValor = valor.getValor(e, salida);
                             if (valValor != null) {
-                                tmp = new Simbolo(this.tipo, id, valValor);
+                                if (asigna.getId().getDimensiones() != 0) {
+                                    if (valValor instanceof Arreglo) {
+                                        if (asigna.getId().getDimensiones() == ((Arreglo) valValor).getDimensiones()) {
+                                            tmp = new Simbolo(this.tipo, Rol.ARREGLO, id, asigna.getId().getDimensiones(), valValor);
+                                        } else {
+                                            System.err.println("las dimensiones no son iguales");
+                                            continue;
+                                        }
+                                    } else {
+                                        System.err.println("No se esta asignando arreglo");
+                                        continue;
+                                    }
+                                } else {
+                                    tmp = new Simbolo(this.tipo, Rol.VARIABLE, id, 1, valValor);
+                                }
                                 e.add(id, tmp);
                                 continue;
                             }
@@ -52,8 +68,13 @@ public class Declaracion extends Instruccion {
                     ((JTextArea) salida).append("Línea: " + asigna.getLinea() + " Columna: " + asigna.getColumna() + ". \n");
 
                 } else {
-                    tmp = new Simbolo(this.tipo, id);
-                    e.add(id, tmp);
+                    if (asigna.getId().getDimensiones() != 0) {
+                        tmp = new Simbolo(this.tipo, Rol.ARREGLO, id, asigna.getId().getDimensiones());
+                        e.add(id, tmp);
+                    } else {
+                        tmp = new Simbolo(this.tipo, Rol.VARIABLE, id, 1);
+                        e.add(id, tmp);
+                    }
                 }
             } else {
                 ((JTextArea) salida).append("*Error Semántico, Ya se ha declarado la variable: " + asigna.getId().getId() + ". ");

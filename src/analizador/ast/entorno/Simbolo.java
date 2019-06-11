@@ -11,18 +11,24 @@ package analizador.ast.entorno;
  */
 public class Simbolo {
     private Tipo tipo;
+    private Rol rol;
     private String id;
+    private int tamaño;
     private Object valor;
 
-    public Simbolo(Tipo tipo, String id) {
+    public Simbolo(Tipo tipo, Rol rol, String id, int tamaño) {
         this.tipo = tipo;
+        this.rol = rol;
         this.id = id;
+        this.tamaño = tamaño;
         this.valor = null;
     }
 
-    public Simbolo(Tipo tipo, String id, Object valor) {
+    public Simbolo(Tipo tipo, Rol rol, String id, int tamaño, Object valor) {
         this.tipo = tipo;
+        this.rol = rol;
         this.id = id;
+        this.tamaño = tamaño;
         this.valor = valor;
     }
 
@@ -66,6 +72,34 @@ public class Simbolo {
      */
     public void setValor(Object valor) {
         this.valor = valor;
+    }
+
+    /**
+     * @return the rol
+     */
+    public Rol getRol() {
+        return rol;
+    }
+
+    /**
+     * @param rol the rol to set
+     */
+    public void setRol(Rol rol) {
+        this.rol = rol;
+    }
+
+    /**
+     * @return the tamaño
+     */
+    public int getTamaño() {
+        return tamaño;
+    }
+
+    /**
+     * @param tamaño the tamaño to set
+     */
+    public void setTamaño(int tamaño) {
+        this.tamaño = tamaño;
     }
     
     

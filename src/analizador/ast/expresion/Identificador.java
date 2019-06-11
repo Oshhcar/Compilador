@@ -14,10 +14,11 @@ import javax.swing.JTextArea;
  *
  * @author oscar
  */
-public class Identificador extends Expresion{
+public class Identificador extends Expresion {
+
     private final String id;
     private int dimensiones;
-    
+
     public Identificador(String id, int linea, int columna) {
         super(linea, columna);
         this.id = id;
@@ -27,7 +28,7 @@ public class Identificador extends Expresion{
     @Override
     public Tipo getTipo(Entorno e, Object salida) {
         Simbolo tmp = e.get(id);
-        if(tmp != null){
+        if (tmp != null) {
             return tmp.getTipo();
         }
         return null;
@@ -36,10 +37,11 @@ public class Identificador extends Expresion{
     @Override
     public Object getValor(Entorno e, Object salida) {
         Simbolo tmp = e.get(id);
-        if(tmp != null){
+        if (tmp != null) {
             return tmp.getValor();
+
         } else {
-            ((JTextArea) salida).append("*Error Semántico, no se ha declarado la variable: \"" + id +"\". ");
+            ((JTextArea) salida).append("*Error Semántico, no se ha declarado la variable: \"" + id + "\". ");
             ((JTextArea) salida).append("Línea: " + this.getLinea() + " Columna: " + this.getColumna() + ". \n");
         }
         return null;
@@ -51,8 +53,8 @@ public class Identificador extends Expresion{
     public String getId() {
         return id;
     }
-    
-    public void addDimension(){
+
+    public void addDimension() {
         this.dimensiones++;
     }
 

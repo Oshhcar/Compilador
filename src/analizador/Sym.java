@@ -45,6 +45,7 @@ public class Sym {
   public static final int menorigual = 35;
   public static final int punto = 18;
   public static final int corcheteDerecha = 15;
+  public static final int new_ = 59;
   public static final int dospuntos = 19;
   public static final int menorque = 33;
   public static final int parDerecha = 13;
@@ -126,7 +127,8 @@ public class Sym {
   "else_",
   "break_",
   "while_",
-  "do_"
+  "do_",
+  "new_"
   };
 }
 

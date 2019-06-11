@@ -5,6 +5,7 @@
  */
 package analizador.ast.instruccion;
 
+import analizador.ast.entorno.Arreglo;
 import analizador.ast.entorno.Entorno;
 import analizador.ast.expresion.Expresion;
 import javax.swing.JTextArea;
@@ -25,9 +26,15 @@ public class Print extends Instruccion {
     @Override
     public Object ejecutar(Entorno e, Object salida) {
         Object valPrint = this.toPrint.getValor(e, salida);
-
         if (valPrint != null) {
-            ((JTextArea) salida).append(valPrint.toString()+"\n");
+            if (valPrint instanceof Arreglo) {
+                Arreglo arr = (Arreglo)valPrint;
+                ((JTextArea) salida).append(arr.print() + "\n");
+            } else {
+                ((JTextArea) salida).append(valPrint.toString() + "\n");
+            }
+        } else {
+            System.err.println("Valor nulo print");
         }
         return null;
     }
