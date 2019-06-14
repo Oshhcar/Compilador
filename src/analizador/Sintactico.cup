@@ -53,7 +53,7 @@ terminal mayorque, menorque, mayorigual, menorigual, igualigual, diferente;
 terminal and, or, not, xor;
 terminal igual, masigual, menosigual, porigual, diagonaligual;
 terminal int_, double_, char_, boolean_, string_;
-terminal print_, printTabla_, if_, else_, break_, while_, do_, new_;
+terminal print_, printTabla_, if_, else_, break_, while_, do_, new_, for_;
 
 non terminal INICIO;
 non terminal ArrayList<NodoAst> SENTENCIAS;
@@ -76,6 +76,9 @@ non terminal DoWhile DO_WHILE;
 non terminal Expresion VALOR;
 non terminal ArrayList<Expresion> DIMENSION; 
 non terminal ArrayList<Expresion> ARREGLO;
+non terminal For FOR;
+non terminal Instruccion FOR_INIT;
+
 non terminal Expresion E;
 
 precedence left interrogacion;
@@ -110,7 +113,8 @@ SENTENCIA ::= print_ parIzquierda E:e parDerecha puntoycoma {: RESULT = new Prin
             | ASIGNACION:a puntoycoma {: RESULT = a; :}
             | IF:a {: RESULT = a; :}
             | WHILE:a {: RESULT = a; :}
-            | DO_WHILE:a puntoycoma {: RESULT = a; :};
+            | DO_WHILE:a puntoycoma {: RESULT = a; :}
+            | FOR:a {: RESULT = a; :};
 
 UNARIO ::=  id:a masmas:x {: RESULT = new PostFijo(new Identificador(a, aleft, aright), Operacion.Operador.AUMENTO, xleft+1, xright+1); :}
            | id:a menosmenos:x {: RESULT = new PostFijo(new Identificador(a, aleft, aright), Operacion.Operador.DECREMENTO, xleft+1, xright+1); :}
@@ -150,6 +154,12 @@ WHILE ::= while_:x parIzquierda E:a parDerecha llaveIzquierda BLOQUES_L:b llaveD
 
 DO_WHILE ::= do_:x llaveIzquierda BLOQUES_L:a llaveDerecha while_ parIzquierda E:b parDerecha {: RESULT = new DoWhile(a, b, xleft, xright); :};
 
+FOR ::= for_:a parIzquierda FOR_INIT:b puntoycoma E:c puntoycoma E:d parDerecha llaveIzquierda BLOQUES_L:e llaveDerecha 
+        {: RESULT = new For(b, c, d, e, aleft, aright); :};
+
+FOR_INIT ::= DECLARACION:a {: RESULT = a; :}
+            | ASIGNACION:a {: RESULT = a; :};
+
 BLOQUES_L ::= {: RESULT = null; :}
             | BLOQUES:a {: RESULT = a; :};
 
@@ -164,7 +174,8 @@ BLOQUE ::= print_ parIzquierda E:e parDerecha puntoycoma {: RESULT = new Print(e
             | IF:a {: RESULT = a; :}
             | break_:a puntoycoma {: RESULT = new Break(aleft, aright); :}
             | WHILE:a {: RESULT = a; :}
-            | DO_WHILE:a puntoycoma {: RESULT = a; :};
+            | DO_WHILE:a puntoycoma {: RESULT = a; :}
+            | FOR:a {: RESULT = a; :};
 
 VALOR ::= E:a {: RESULT = a; :}
            | new_:x TIPO:a DIMENSION:b {: RESULT = new Literal(a, b, xleft, xright); :}

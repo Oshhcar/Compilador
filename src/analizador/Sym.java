@@ -58,6 +58,7 @@ public class Sym {
   public static final int corcheteIzquierda = 14;
   public static final int diferente = 37;
   public static final int llaveDerecha = 11;
+  public static final int for_ = 60;
   public static final int not = 40;
   public static final int and = 38;
   public static final int umenos = 26;
@@ -128,7 +129,8 @@ public class Sym {
   "break_",
   "while_",
   "do_",
-  "new_"
+  "new_",
+  "for_"
   };
 }
 
