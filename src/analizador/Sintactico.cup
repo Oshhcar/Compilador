@@ -78,6 +78,7 @@ non terminal ArrayList<Expresion> DIMENSION;
 non terminal ArrayList<Expresion> ARREGLO;
 non terminal For FOR;
 non terminal Instruccion FOR_INIT;
+non terminal AsignacionArreglo ASIGNA_ARREGLO;
 
 non terminal Expresion E;
 
@@ -114,7 +115,8 @@ SENTENCIA ::= print_ parIzquierda E:e parDerecha puntoycoma {: RESULT = new Prin
             | IF:a {: RESULT = a; :}
             | WHILE:a {: RESULT = a; :}
             | DO_WHILE:a puntoycoma {: RESULT = a; :}
-            | FOR:a {: RESULT = a; :};
+            | FOR:a {: RESULT = a; :}
+            | ASIGNA_ARREGLO:a puntoycoma {: RESULT = a; :};
 
 UNARIO ::=  id:a masmas:x {: RESULT = new PostFijo(new Identificador(a, aleft, aright), Operacion.Operador.AUMENTO, xleft+1, xright+1); :}
            | id:a menosmenos:x {: RESULT = new PostFijo(new Identificador(a, aleft, aright), Operacion.Operador.DECREMENTO, xleft+1, xright+1); :}
@@ -133,6 +135,8 @@ DECLARACION_ID ::= DECLARACION_ID:a corcheteIzquierda corcheteDerecha {:RESULT =
                 | id:a {: RESULT = new Identificador(a, aleft, aright); :};
 
 ASIGNACION ::= id:a igual VALOR:b {: RESULT = new Asignacion(new Identificador(a, aleft, aright), b, aleft, aright); :};
+
+ASIGNA_ARREGLO ::= id:a DIMENSION:b igual VALOR:c {: RESULT = new AsignacionArreglo(new Identificador(a, aleft, aright), b, c, aleft, aright); :};
 
 TIPO ::= int_ {: RESULT = Tipo.INT; :}
         |double_ {: RESULT = Tipo.DOUBLE; :}
@@ -175,7 +179,8 @@ BLOQUE ::= print_ parIzquierda E:e parDerecha puntoycoma {: RESULT = new Print(e
             | break_:a puntoycoma {: RESULT = new Break(aleft, aright); :}
             | WHILE:a {: RESULT = a; :}
             | DO_WHILE:a puntoycoma {: RESULT = a; :}
-            | FOR:a {: RESULT = a; :};
+            | FOR:a {: RESULT = a; :}
+            | ASIGNA_ARREGLO:a puntoycoma {: RESULT = a; :};
 
 VALOR ::= E:a {: RESULT = a; :}
            | new_:x TIPO:a DIMENSION:b {: RESULT = new Literal(a, b, xleft, xright); :}
